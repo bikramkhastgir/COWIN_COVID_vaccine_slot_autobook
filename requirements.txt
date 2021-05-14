@@ -1,0 +1,3 @@
+svglib==1.0.1
+PySimpleGUI==4.40.0
+Pillow==8.1.1
