@@ -402,7 +402,7 @@ def main():
                     #break
             elif resp.status_code == 200:
                 print("BOOKED! Check Cowin Portal.")
-                print("Booked for " + str(can_be_given) " person.")
+                print("Booked for " + str(can_be_given) + " person.")
                 booked_flag = True
             elif resp.status_code == 400:
                 print(f"Response: {resp.status_code} : {resp.text}")
