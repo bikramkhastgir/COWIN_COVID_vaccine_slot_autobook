@@ -186,7 +186,7 @@ def get_vaccine_centers_in_district(base_url, start_date_datetime, location_dtls
                 total_list += resp
             else:
                 print("Session timed out. Trying to Login In. Please give OTP.")
-                time.sleep(2)
+                time.sleep(4)
                 status_code = check_session()     
     return total_list
 
@@ -206,7 +206,7 @@ def get_vaccine_centers_in_pincode(base_url, start_date_datetime, location_dtls)
                 total_list += resp
             else:
                 print("Session timed out. Trying to Login In. Please give OTP.")
-                time.sleep(2)
+                time.sleep(4)
                 status_code = check_session()  
     return total_list
 
@@ -255,7 +255,7 @@ def remove_centers_on_other_criterias(resp):
                 ),
             )    
     else:
-        time.sleep(3) # To stop spam
+        time.sleep(4) # To stop spam
         print("No vaccination center found for the given criteria")
     #print("Options" , options)
     return options
