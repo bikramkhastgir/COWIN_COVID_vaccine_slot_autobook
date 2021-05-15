@@ -351,8 +351,9 @@ def main():
         
         #Enter option to choose Center
         if len(options) > 1:
+            header = ['#Center Number'] + ['Name - Pincode'] + ['Number of slots available']
             center_values = [[iter_num+1] + list([center_details['name'] + " - " + str(center_details['pincode'])]) + list([center_details['available']]) for iter_num, center_details in enumerate(options)]
-            print(tabulate.tabulate(center_values, tablefmt="grid"))
+            print(tabulate.tabulate(center_values, header, tablefmt="grid"))
             center_choice_input = input("Enter the Center number from the table above where you would like to book : ")
             center_choice_num = int(center_choice_input)-1
         else:
