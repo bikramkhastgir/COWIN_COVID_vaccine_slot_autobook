@@ -401,8 +401,8 @@ def main():
                 #if len(_) < 1:
                     #break
             elif resp.status_code == 200:
-                print("BOOKED!")
-                print("Booked for : " + str([beneficiary_dtls][0]['name']) )
+                print("BOOKED! Check Cowin Portal.")
+                print("Booked for " + str(can_be_given) " person.")
                 booked_flag = True
             elif resp.status_code == 400:
                 print(f"Response: {resp.status_code} : {resp.text}")
@@ -418,7 +418,6 @@ def main():
         count_trial_booking += 1
         print(f"Booking Response Code: {resp.status_code}")
         
-    print("Booked. Check the COWIN portal")
     
 
 if __name__ == '__main__':
