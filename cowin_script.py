@@ -312,8 +312,9 @@ def main():
     #                    "district_id": 265,
     #                    "district_name": "Bangalore Urban"
     #                }]
-    location_search_choice = int(input("Do you want to search by Pincode (enter 1) or District (enter 2) : ").strip())
-    #location_search_choice == 2 # For Testing
+    #location_search_choice = int(input("Do you want to search by Pincode (enter 1) or District (enter 2) : ").strip())
+    print(">>>>Searching by District<<<<")
+    location_search_choice = 2 # For Testing 
     if location_search_choice == 2:
         reqd_districts = set_location_preference_by_district()
         location_dtls = copy.deepcopy(reqd_districts)
@@ -348,9 +349,20 @@ def main():
         winsound.Beep(750, 1000)
         options = copy.deepcopy(resp_centers_available)
         
+        #Enter option to choose Center
+        if len(options) > 1:
+            center_values = [[iter_num+1] + list([center_details['name'] + " - " + str(center_details['pincode'])]) + list([center_details['available']]) for iter_num, center_details in enumerate(options)]
+            print(tabulate.tabulate(center_values, tablefmt="grid"))
+            center_choice_input = input("Enter the Center number from the table above where you would like to book : ")
+            center_choice_num = int(center_choice_input)-1
+        else:
+            center_choice_num = 0
+            
+            
+        
         #Count number of benificiary
+        max_avaliable = options[center_choice_num]['available']
         can_be_given = 0
-        max_avaliable = options[0]['available']
         if max_avaliable == 1:
             can_be_given = 1
         elif max_avaliable == 2:
@@ -371,9 +383,9 @@ def main():
         new_req = {
             "beneficiaries": ben_id,
             "dose": 1,
-            "center_id": options[0]["center_id"],
-            "session_id": options[0]["session_id"],
-            "slot": options[0]["slots"][1],
+            "center_id": options[center_choice_num]["center_id"],
+            "session_id": options[center_choice_num]["session_id"],
+            "slot": options[center_choice_num]["slots"][0],
         }
         
         # Write the captcha
