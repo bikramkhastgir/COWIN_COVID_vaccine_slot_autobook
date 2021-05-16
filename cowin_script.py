@@ -417,6 +417,7 @@ def main():
                 print("BOOKED! Check Cowin Portal.")
                 print("Booked for " + str(can_be_given) + " person.")
                 booked_flag = True
+                valid_captcha = False
             elif resp.status_code == 400:
                 print(f"Response: {resp.status_code} : {resp.text}")
                 pass
