@@ -421,9 +421,12 @@ def main():
             elif resp.status_code == 400:
                 print(f"Response: {resp.status_code} : {resp.text}")
                 pass
+            elif resp.status_code == 409: #Center is booked
+                print(f"Center's slots got filled! Try Again. Response: {resp.status_code} : {resp.text}")
+                valid_captcha = False
             else:
                 print(f"Response: {resp.status_code} : {resp.text}")
-                user_captcha_ans = input("Regenerate Captcha? y/n")
+                user_captcha_ans = input("Regenerate Captcha? y/n: ")
                 if user_captcha_ans.lower() == "n":
                     break
                 else:
