@@ -3,7 +3,8 @@ A Python package to facilitate the notification and auto booking of vaccine slot
 
 - The OTP will be needed to be entered manually. This is a simplified version from Bombardier's package which requires some more setting up to automate the capture of OTP from mobile. 
 - Also once a slot is available, the CAPTCHA will pop up and the user needs to manually enter it.
-- Once the slots are booked, it will be reflected in the Co-WIN portal (https://www.cowin.gov.in/) by logging in through the same mobile number entered in this script for OTP. 
+- Once the slots are booked, it will be reflected in the Co-WIN portal (https://www.cowin.gov.in/) by logging in through the same mobile number entered in this script for OTP.
+- Search enabled with district only for now. ** 
 
 
 Note:
