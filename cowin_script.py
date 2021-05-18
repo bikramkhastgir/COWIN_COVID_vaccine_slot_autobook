@@ -39,9 +39,9 @@ vaccine_type = None      # "COVISHIELD" or "COVAXIN" or "SPUTNIK V"
 search_option = 2
 refresh_freq = 15        # in secs
 auto_book = "yes-please"
-start_date = 2           #2 - tomorrow, 1 - Today
+start_date = 1           #2 - tomorrow, 1 - Today
 fee_type = ["Free", "Paid"]
-center_age_filter = 18
+center_age_filter = 18   # 18 or 45
 dose_num = 1             # 1- First Dose, 2- Second Dose
 
 def check_session():
@@ -359,15 +359,15 @@ def main():
                 status_code = check_session()
                 if status_code != 200:
                     start = datetime.datetime.now()
-        print(resp_centers_available)
+        #print(resp_centers_available)
         winsound.Beep(650, 1000)
         winsound.Beep(750, 1000)
         options = copy.deepcopy(resp_centers_available)
         
         #Enter option to choose Center
         if len(options) > 1:
-            header = ['#Center Number'] + ['Name - Pincode'] + ['Number of slots available']
-            center_values = [[iter_num+1] + list([center_details['name'] + " - " + str(center_details['pincode'])]) + list([center_details['available']]) for iter_num, center_details in enumerate(options)]
+            header = ['#Center Number'] + ['Name - Pincode'] + ['Number of slots available'] + ['date']
+            center_values = [[iter_num+1] + list([center_details['name'] + " - " + str(center_details['pincode'])]) + list([center_details['available']]) + list([center_details['date']]) for iter_num, center_details in enumerate(options)]
             print(tabulate.tabulate(center_values, header, tablefmt="grid"))
             center_choice_input = input("Enter the Center number from the table above where you would like to book : ")
             center_choice_num = int(center_choice_input)-1
