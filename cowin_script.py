@@ -115,14 +115,20 @@ def set_location_preference_by_district():
                 pincode = location_path_info[0]
             else:
                 reqd_districts= []
+                reqd_districts_show_values = []
                 state = location_path_info[0]
                 district_list = location_path_info[1]
-                for district_str in district_list.split(","):
+                for i, district_str in enumerate(district_list.split(",")):
                     district_id, district_name = district_str.split(":")
                     reqd_districts.append({
                             "district_id": district_id,
                             "district_name": district_name
                         })
+                    reqd_districts_show_values += [[i+1] + [state] + [district_name]]
+                print(tabulate.tabulate(reqd_districts_show_values, tablefmt="grid"))
+                continue_curr_location = input("Do you want to keep searching in the above location(s)? y/n : ").strip().lower()
+                if continue_curr_location == "n":
+                    get_location_flag = True
     else:
         get_location_flag = True
         
@@ -140,7 +146,7 @@ def set_location_preference_by_district():
 def set_location_preference_by_pincode():
     locations = []
     pincodes = input("Enter pincodes to search (For multiple, write the pincodes with comma): ")
-    for pincode in enumerate(pincodes.split(",")):
+    for i, pincode in enumerate(pincodes.split(",")):
         locations.append({"pincode": pincode})
     return locations
             
@@ -404,7 +410,7 @@ def main():
         t1.join()
         valid_captcha = True
         #########################Testing#######################
-        #break ###### remove
+        break ###### remove
         while valid_captcha:
             resp = requests.post(CAPTCHA_URL, headers=request_header)
             if resp.status_code == 200:
@@ -442,7 +448,7 @@ def main():
                     continue 
                     
         count_trial_booking += 1
-        #break ###### remove
+        break ###### remove
         print(f"Booking Response Code: {resp.status_code}")
         
     
