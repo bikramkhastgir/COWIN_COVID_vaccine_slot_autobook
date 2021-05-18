@@ -410,7 +410,7 @@ def main():
         t1.join()
         valid_captcha = True
         #########################Testing#######################
-        break ###### remove
+        #break ###### remove
         while valid_captcha:
             resp = requests.post(CAPTCHA_URL, headers=request_header)
             if resp.status_code == 200:
@@ -448,7 +448,7 @@ def main():
                     continue 
                     
         count_trial_booking += 1
-        break ###### remove
+        #break ###### remove
         print(f"Booking Response Code: {resp.status_code}")
         
     
