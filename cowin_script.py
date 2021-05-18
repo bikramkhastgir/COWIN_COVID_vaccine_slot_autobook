@@ -35,13 +35,14 @@ location_path = "location_details.txt"
 
 # Vaccine Search Parameters
 minimum_slots = 1
-vaccine_type = None      # "COVISHIELD" or "COVAXIN"
+vaccine_type = None      # "COVISHIELD" or "COVAXIN" or "SPUTNIK V"
 search_option = 2
 refresh_freq = 15        # in secs
 auto_book = "yes-please"
 start_date = 2           #2 - tomorrow, 1 - Today
 fee_type = ["Free", "Paid"]
 center_age_filter = 18
+dose_num = 1             # 1- First Dose, 2- Second Dose
 
 def check_session():
     if os.path.exists(token_path):
@@ -104,21 +105,28 @@ def set_mobile_number():
     return mobile_num
 
 def set_location_preference_by_district():
+    get_location_flag = False
     if os.path.exists(location_path):
         location_path_info = open(location_path, 'r').read().split("|")
-        if len(location_path_info) == 1:
-            pincode = location_path_info[0]
+        if location_path_info[0].strip() == '':
+            get_location_flag = True
         else:
-            reqd_districts= []
-            state = location_path_info[0]
-            district_list = location_path_info[1]
-            for district_str in district_list.split(","):
-                district_id, district_name = district_str.split(":")
-                reqd_districts.append({
-                        "district_id": district_id,
-                        "district_name": district_name
-                    })
+            if len(location_path_info) == 1:
+                pincode = location_path_info[0]
+            else:
+                reqd_districts= []
+                state = location_path_info[0]
+                district_list = location_path_info[1]
+                for district_str in district_list.split(","):
+                    district_id, district_name = district_str.split(":")
+                    reqd_districts.append({
+                            "district_id": district_id,
+                            "district_name": district_name
+                        })
     else:
+        get_location_flag = True
+        
+    if get_location_flag == True:
         str_dist = ''
         reqd_districts, state = get_distict_names()
         for reqd_districts_each in reqd_districts:
@@ -164,7 +172,7 @@ def get_distict_names():
                         "district_id": district["district_id"],
                         "district_name": district["district_name"]
                     })
-            print("Hey", reqd_districts)
+            #print("Hey", reqd_districts)
         return reqd_districts, states[int(state_input)-1]["state_name"]
     else:
         print("Unable to Fetch District details.")
@@ -231,13 +239,14 @@ def remove_centers_on_other_criterias(resp):
                 for session in center["sessions"]:
                     if ((session["available_capacity"] >= minimum_slots)
                         and (session["min_age_limit"] == center_age_filter)
-                        and (center["fee_type"] in fee_type)):
+                        and (center["fee_type"] in fee_type)
+                        and (session["available_capacity_dose" + str(dose_num)] >= minimum_slots)):
                         out = {
                             "name": center["name"],
                             "district": center["district_name"],
                             "pincode": center["pincode"],
                             "center_id": center["center_id"],
-                            "available": session["available_capacity"],
+                            "available": session["available_capacity_dose" + str(dose_num)],
                             "date": session["date"],
                             "slots": session["slots"],
                             "session_id": session["session_id"],
@@ -383,7 +392,7 @@ def main():
             ben_id.append(beneficiary_dtls[each_ben_num]["bref_id"])
         new_req = {
             "beneficiaries": ben_id,
-            "dose": 1,
+            "dose": dose_num,
             "center_id": options[center_choice_num]["center_id"],
             "session_id": options[center_choice_num]["session_id"],
             "slot": options[center_choice_num]["slots"][0],
@@ -395,7 +404,7 @@ def main():
         t1.join()
         valid_captcha = True
         #########################Testing#######################
-        #break ###### remove
+        break ###### remove
         while valid_captcha:
             resp = requests.post(CAPTCHA_URL, headers=request_header)
             if resp.status_code == 200:
@@ -433,6 +442,7 @@ def main():
                     continue 
                     
         count_trial_booking += 1
+        break ###### remove
         print(f"Booking Response Code: {resp.status_code}")
         
     
