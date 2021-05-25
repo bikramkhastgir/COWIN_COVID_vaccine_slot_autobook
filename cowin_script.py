@@ -25,8 +25,8 @@ OTP_PRO_URL = "https://cdn-api.co-vin.in/api/v2/auth/generateMobileOTP"
 
 #My login details
 mobile = '' # Enter your mobile number
-request_header = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
-data = {'mobile': mobile, 'secret': 'U2FsdGVkX1+z/4Nr9nta+2DrVJSv7KS6VoQUSQ1ZXYDx/CJUkWxFYG6P3iM/VW+6jLQ9RDQVzp/RcZ8kbT41xw=='}
+request_header = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36', 'origin': 'https://selfregistration.cowin.gov.in/', 'referer': 'https://selfregistration.cowin.gov.in/'}
+data = {'mobile': mobile, 'secret': 'U2FsdGVkX18BvjOVPDcXyiu/QNIRsfFfKPBE7b1d6auwbUdw26//Bn/ppK69B6V64RC/R6+GaSA+oAyDR1Mrgw=='}
 
 #Local file Paths
 token_path = "session_token.txt"
